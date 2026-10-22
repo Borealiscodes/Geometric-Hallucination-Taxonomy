@@ -1,0 +1,160 @@
+% =====================================================================
+% 08-Appendix-Misc.tex
+% Geometric Hallucination Taxonomy — Mathematical Spine
+% Borealis S. Hedling — 2026
+% =====================================================================
+
+\section*{08. Appendix: Miscellaneous Lemmas and Numerical Notes}
+
+This appendix contains auxiliary results, discretization formulas,
+approximation lemmas, and supporting material used throughout the
+mathematical spine. These results are not operator-specific but are
+required for numerical validation, Python toolkit alignment, and Lean
+formalization consistency.
+
+% ---------------------------------------------------------------------
+\subsection*{8.1 Jacobi Field Approximation}
+
+Let $\gamma$ be a geodesic and $J$ a Jacobi field along $\gamma$:
+\[
+\nabla_{\dot{\gamma}}^2 J + R(J,\dot{\gamma})\dot{\gamma} = 0.
+\]
+
+In discrete settings, the second covariant derivative is approximated by
+\[
+\nabla_{\dot{\gamma}}^2 J(t)
+\approx
+\frac{J(t+1) - 2J(t) + J(t-1)}{\Delta t^2}.
+\]
+
+This approximation is used in curvature-based diagnostics.
+
+% ---------------------------------------------------------------------
+\subsection*{8.2 Discrete Christoffel Symbols}
+
+Given a coordinate chart, Christoffel symbols are approximated by
+finite differences:
+\[
+\Gamma^i_{\;jk}(x_t)
+\approx
+\frac{1}{2} g^{im}(x_t)
+\left(
+\frac{g_{km}(x_{t+1}) - g_{km}(x_{t-1})}{2\Delta t}
++
+\frac{g_{jm}(x_{t+1}) - g_{jm}(x_{t-1})}{2\Delta t}
+-
+\frac{g_{jk}(x_{t+1}) - g_{jk}(x_{t-1})}{2\Delta t}
+\right).
+\]
+
+This is the discrete version used in curvature and holonomy modules.
+
+% ---------------------------------------------------------------------
+\subsection*{8.3 Parallel Transport Approximation}
+
+Parallel transport of a vector $V_t$ along a discrete trajectory is
+approximated by
+\[
+V_{t+1}
+= V_t - \Gamma(x_t)(\dot{x}_t, V_t)\Delta t.
+\]
+
+This formula is used in holonomy drift experiments.
+
+% ---------------------------------------------------------------------
+\subsection*{8.4 Discrete Eigenvalue Drift}
+
+Given matrices $A_t$ and $A_{t+1}$, eigenvalue drift is computed by
+\[
+\Delta_\lambda(t)
+= \lambda(t+1) - \lambda(t),
+\]
+where eigenvalues are obtained via numerical eigendecomposition.
+
+This approximation is used in spectral cascade diagnostics.
+
+% ---------------------------------------------------------------------
+\subsection*{8.5 Metric Determinant Approximation}
+
+The determinant of the metric matrix is computed numerically via
+\[
+\det(g_{ij}(x_t))
+= \prod_{i=1}^n \sigma_i,
+\]
+where $\sigma_i$ are singular values of $g_{ij}(x_t)$.
+
+This is used in topological collapse detection.
+
+% ---------------------------------------------------------------------
+\subsection*{8.6 Fusion–Field Numerical Stability}
+
+Given latent vectors $x_t$ and $y_t$, the fusion–field output is
+\[
+F_t = \alpha x_t + \beta y_t + \gamma \sigma(x_t, y_t).
+\]
+
+To avoid numerical overflow, nonlinear terms are clipped:
+\[
+\sigma(x_t, y_t)
+\leftarrow
+\min\left( \sigma(x_t, y_t), \sigma_{\max} \right).
+\]
+
+This ensures stable numerical evaluation of fusion spikes.
+
+% ---------------------------------------------------------------------
+\subsection*{8.7 Auxiliary Lemma: Threshold Crossing}
+
+\begin{lemma}[Threshold Crossing]
+Let $z(t)$ be a diagnostic quantity (curvature, spectral derivative,
+holonomy norm, metric rank, or fusion norm). If $z(t)$ is continuous in
+$t$ and $z(t_0) > z_{\mathrm{thr}}$, then there exists $\delta > 0$ such
+that $z(t) > z_{\mathrm{thr}}$ for all $t \in (t_0 - \delta, t_0 + \delta)$.
+\end{lemma}
+
+\begin{proof}[Sketch]
+Continuity ensures that values near $t_0$ remain above the threshold.
+\end{proof}
+
+% ---------------------------------------------------------------------
+\subsection*{8.8 Auxiliary Lemma: Instability Propagation}
+
+\begin{lemma}[Propagation]
+If operator $A$ is unstable at time $t_0$ and operator $B$ depends
+smoothly on $A$, then $B$ is unstable at some time $t_1$ near $t_0$.
+\end{lemma}
+
+\begin{proof}[Sketch]
+Smooth dependence ensures that instability in $A$ induces instability in
+$B$ through the interaction map $\mathcal{I}$.
+\end{proof}
+
+% ---------------------------------------------------------------------
+\subsection*{8.9 Numerical Stability Conditions}
+
+To ensure numerical stability in experiments:
+\begin{itemize}
+\item step size $\Delta t$ must satisfy $\Delta t < \Delta t_{\max}$,
+\item metric matrices must be regularized to avoid near-degeneracy,
+\item eigenvalue computations must use stable algorithms,
+\item nonlinear fusion terms must be clipped or normalized.
+\end{itemize}
+
+These conditions ensure reproducibility of diagnostic results.
+
+% ---------------------------------------------------------------------
+\subsection*{8.10 Lean Formalization Notes}
+
+For mechanization in Lean:
+\begin{itemize}
+\item discrete approximations correspond to sequences,
+\item continuous operators correspond to smooth structures,
+\item thresholds correspond to fixed constants,
+\item instability predicates correspond to decidable propositions.
+\end{itemize}
+
+These notes ensure consistency between the `.tex` spine and Lean files.
+
+% =====================================================================
+% End of 08-Appendix-Misc.tex
+% =====================================================================
