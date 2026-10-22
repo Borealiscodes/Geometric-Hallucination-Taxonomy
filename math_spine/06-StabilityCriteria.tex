@@ -1,0 +1,185 @@
+% =====================================================================
+% 06-StabilityCriteria.tex
+% Geometric Hallucination Taxonomy — Mathematical Spine
+% Borealis S. Hedling — 2026
+% =====================================================================
+
+\section*{06. Unified Stability Criteria}
+
+This module formalizes the unified instability framework used across the
+Geometric Hallucination Taxonomy (GHT). Each operator—curvature, spectral,
+holonomy, topology, and fusion—has its own instability criterion. Here we
+combine them into a single stability structure that governs latent
+trajectory behavior.
+
+All definitions rely on the geometric foundations established in
+00-Foundations.tex and the operator modules 01–05.
+
+% ---------------------------------------------------------------------
+\subsection*{6.1 Latent Trajectory}
+
+Let $x(t)$ be a latent trajectory evolving on the manifold $M$:
+\[
+x : \mathbb{N} \to M.
+\]
+
+At each step $t$, the trajectory may exhibit geometric instability
+according to one or more operator criteria.
+
+% ---------------------------------------------------------------------
+\subsection*{6.2 Operator Outputs}
+
+For each operator, define the diagnostic output:
+
+\begin{itemize}
+\item Curvature: $K_t = K(\dot{x}(t), v(t))$,
+\item Spectral: $\Delta_\lambda(t) = \lambda(t+1) - \lambda(t)$,
+\item Holonomy: $H_{\gamma_t} = P_{\gamma_t} - I$,
+\item Topology: $\tau_t = \tau(x(t))$,
+\item Fusion: $F_t = F(x(t), y(t))$.
+\end{itemize}
+
+These quantities measure geometric behavior along the trajectory.
+
+% ---------------------------------------------------------------------
+\subsection*{6.3 Stability Thresholds}
+
+Each operator has an associated threshold:
+
+\[
+\kappa_{\mathrm{thr}}, \quad
+\sigma_{\mathrm{thr}}, \quad
+h_{\mathrm{thr}}, \quad
+\tau_{\mathrm{thr}} = n, \quad
+f_{\mathrm{thr}}.
+\]
+
+A trajectory is stable with respect to an operator if its diagnostic
+output remains below the corresponding threshold.
+
+% ---------------------------------------------------------------------
+\subsection*{6.4 Operator Stability Conditions}
+
+\paragraph{Curvature Stability}
+\[
+|K_t| \le \kappa_{\mathrm{thr}}.
+\]
+
+\paragraph{Spectral Stability}
+\[
+|\Delta_\lambda(t)| \le \sigma_{\mathrm{thr}}.
+\]
+
+\paragraph{Holonomy Stability}
+\[
+\|H_{\gamma_t}\| \le h_{\mathrm{thr}}.
+\]
+
+\paragraph{Topological Stability}
+\[
+\tau_t = n.
+\]
+
+\paragraph{Fusion Stability}
+\[
+\|F_t\|_g \le f_{\mathrm{thr}}.
+\]
+
+% ---------------------------------------------------------------------
+\subsection*{6.5 Unified Stability Region}
+
+Define the unified stability region
+\[
+\Omega
+= \Omega_{\kappa}
+\cap \Omega_{\sigma}
+\cap \Omega_{h}
+\cap \Omega_{\tau}
+\cap \Omega_{f}.
+\]
+
+A latent trajectory is globally stable if
+\[
+x(t) \in \Omega \quad \text{for all } t.
+\]
+
+% ---------------------------------------------------------------------
+\subsection*{6.6 Unified Instability Condition}
+
+A latent trajectory exhibits geometric instability if at least one
+operator exceeds its threshold:
+
+\[
+\exists t \in \mathbb{N}, \quad
+\Big(
+|K_t| > \kappa_{\mathrm{thr}}
+\;\lor\;
+|\Delta_\lambda(t)| > \sigma_{\mathrm{thr}}
+\;\lor\;
+\|H_{\gamma_t}\| > h_{\mathrm{thr}}
+\;\lor\;
+\tau_t < n
+\;\lor\;
+\|F_t\|_g > f_{\mathrm{thr}}
+\Big).
+\]
+
+This condition defines the onset of hallucination behavior.
+
+% ---------------------------------------------------------------------
+\subsection*{6.7 Persistent Instability}
+
+Persistent instability occurs when instability recurs infinitely often:
+
+\[
+\{ t : x(t) \notin \Omega \} \text{ is infinite}.
+\]
+
+Persistent instability corresponds to sustained hallucination behavior.
+
+% ---------------------------------------------------------------------
+\subsection*{6.8 Operator Interaction}
+
+Operators may interact. For example:
+
+\begin{itemize}
+\item Spectral cascades may induce curvature blowout,
+\item Holonomy drift may distort fusion–field geometry,
+\item Metric collapse may amplify spectral instability,
+\item Fusion spikes may distort curvature directions.
+\end{itemize}
+
+Define the interaction map
+\[
+\mathcal{I} : \{K_t, \Delta_\lambda(t), H_{\gamma_t}, \tau_t, F_t\}
+\to \{K_{t+1}, \Delta_\lambda(t+1), H_{\gamma_{t+1}}, \tau_{t+1}, F_{t+1}\}.
+\]
+
+Instability propagates through $\mathcal{I}$.
+
+% ---------------------------------------------------------------------
+\subsection*{6.9 Unified Hallucination Condition}
+
+A latent trajectory exhibits hallucination behavior if
+\[
+\exists t_0 \in \mathbb{N}, \quad
+x(t_0) \notin \Omega,
+\]
+and instability propagates through $\mathcal{I}$ to produce persistent
+instability.
+
+This condition unifies CDH, SCH, HDH, TIH, and FFH.
+
+% ---------------------------------------------------------------------
+\subsection*{6.10 Discrete Approximation}
+
+In numerical settings, unified stability is checked by evaluating each
+operator’s discrete approximation at each step and verifying whether
+$x(t)$ remains in $\Omega$.
+
+The Python toolkit implements unified stability checks in
+\texttt{/tests/test\_stability.py}.
+
+% =====================================================================
+% End of 06-StabilityCriteria.tex
+% =====================================================================
