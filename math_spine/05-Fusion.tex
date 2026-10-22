@@ -1,0 +1,189 @@
+% =====================================================================
+% 05-Fusion.tex
+% Geometric Hallucination Taxonomy — Mathematical Spine
+% Borealis S. Hedling — 2026
+% =====================================================================
+
+\section*{05. Fusion–Field Operator}
+
+This module formalizes nonlinear fusion fields, interaction terms,
+dominance conditions, and instability criteria used to define
+Fusion–Field Hallucinations (FFH) in the Geometric Hallucination
+Taxonomy (GHT). All definitions rely on the geometric foundations
+established in 00-Foundations.tex.
+
+Fusion–field instability corresponds to uncontrolled nonlinear blending
+of latent representations, producing representational spikes, semantic
+cross–contamination, and collapse into mixed manifolds.
+
+% ---------------------------------------------------------------------
+\subsection*{5.1 Fusion–Field Definition}
+
+Let $x, y \in T_p M$ be tangent vectors representing latent states.
+A fusion–field is a smooth map
+\[
+F : TM \times TM \to TM
+\]
+defined by
+\[
+F(x,y)
+= \alpha x + \beta y + \gamma \, \sigma(x,y),
+\]
+where:
+\begin{itemize}
+\item $\alpha, \beta, \gamma \in \mathbb{R}$ are scalar weights,
+\item $\sigma : TM \times TM \to TM$ is a nonlinear interaction term.
+\end{itemize}
+
+The linear terms $\alpha x$ and $\beta y$ represent stable blending.
+The nonlinear term $\gamma \, \sigma(x,y)$ represents interaction
+dynamics that may induce instability.
+
+% ---------------------------------------------------------------------
+\subsection*{5.2 Properties of the Interaction Term}
+
+The interaction term $\sigma$ satisfies:
+\begin{itemize}
+\item smoothness: $\sigma$ is $C^\infty$,
+\item bilinearity in the linear regime,
+\item nonlinear amplification in unstable regimes,
+\item symmetry or antisymmetry depending on the operator subtype.
+\end{itemize}
+
+Examples include:
+\[
+\sigma(x,y) = \langle x,y \rangle_g \, x,
+\qquad
+\sigma(x,y) = x \times y,
+\qquad
+\sigma(x,y) = \mathrm{ReLU}(x+y),
+\]
+depending on the latent geometry.
+
+% ---------------------------------------------------------------------
+\subsection*{5.3 Fusion–Field Norm}
+
+The norm of the fusion–field output is
+\[
+\|F(x,y)\|_g
+= \|\alpha x + \beta y + \gamma \sigma(x,y)\|_g.
+\]
+
+This norm measures the magnitude of the fused representation.
+
+% ---------------------------------------------------------------------
+\subsection*{5.4 Dominance Condition}
+
+Nonlinear dominance occurs when
+\[
+\|\gamma \sigma(x,y)\|_g
+\gg
+\|\alpha x + \beta y\|_g.
+\]
+
+Equivalently,
+\[
+\frac{\|\gamma \sigma(x,y)\|_g}
+     {\|\alpha x + \beta y\|_g}
+\to \infty.
+\]
+
+Dominance indicates that nonlinear interaction overwhelms stable
+blending, producing representational spikes.
+
+% ---------------------------------------------------------------------
+\subsection*{5.5 Fusion Instability Criterion}
+
+Fusion instability occurs when
+\[
+\|F(x,y)\|_g > f_{\mathrm{thr}}.
+\]
+
+Spike instability occurs when
+\[
+\|\gamma \sigma(x,y)\|_g > f_{\mathrm{thr}}.
+\]
+
+Oscillatory instability occurs when
+\[
+F(x_{t+1}, y_{t+1}) \cdot F(x_t, y_t) < 0,
+\]
+in an appropriate operator sense.
+
+Collapse instability occurs when
+\[
+F(x,y) \to 0
+\]
+due to destructive interference.
+
+% ---------------------------------------------------------------------
+\subsection*{5.6 Fusion–Field Dynamics Along Trajectories}
+
+Given a latent trajectory $x(t)$ and a secondary trajectory $y(t)$,
+fusion dynamics are defined by
+\[
+F_t = F(x(t), y(t)).
+\]
+
+Instability arises when $F_t$ exhibits:
+\begin{itemize}
+\item explosive growth,
+\item collapse,
+\item oscillation,
+\item dominance of nonlinear interaction.
+\end{itemize}
+
+These behaviors correspond to distinct FFH subtypes.
+
+% ---------------------------------------------------------------------
+\subsection*{5.7 Fusion Stability Region}
+
+Define the fusion stability region
+\[
+\Omega_f
+= \{ (x,y) \in TM \times TM :
+\|F(x,y)\|_g \le f_{\mathrm{thr}} \}.
+\]
+
+A latent trajectory pair $(x(t), y(t))$ is fusion–stable if
+$(x(t), y(t)) \in \Omega_f$ for all $t$.
+
+% ---------------------------------------------------------------------
+\subsection*{5.8 Discrete Approximation}
+
+In numerical settings, fusion–field output is computed directly from
+discrete latent vectors:
+\[
+F_t = \alpha x_t + \beta y_t + \gamma \sigma(x_t, y_t).
+\]
+
+Nonlinear interaction terms may be implemented using:
+\begin{itemize}
+\item elementwise nonlinearities,
+\item bilinear forms,
+\item cross–product analogues,
+\item neural activation functions.
+\end{itemize}
+
+The Python toolkit implements these approximations and validates them in
+\texttt{/tests/test\_fusion.py}.
+
+% ---------------------------------------------------------------------
+\subsection*{5.9 Fusion–Field Hallucinations (FFH)}
+
+A latent trajectory exhibits FFH if there exist sequences $x(t)$ and
+$y(t)$ such that
+\[
+\|F(x(t), y(t))\|_g > f_{\mathrm{thr}}
+\quad \text{for infinitely many } t.
+\]
+
+Equivalently, FFH occurs when nonlinear interaction prevents the latent
+trajectory from remaining within a stable blending regime.
+
+Fusion–field instability corresponds to uncontrolled nonlinear mixing of
+representations.
+
+% =====================================================================
+% End of 05-Fusion.tex
+% =====================================================================
