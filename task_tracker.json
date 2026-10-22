@@ -1,0 +1,327 @@
+{
+  "project": "Geometric Hallucination Taxonomy (GHT)",
+  "version": "1.0",
+  "generated": "2026-10-22T20:28:00+01:00",
+  "tasks": [
+    {
+      "id": "INF-01",
+      "task": "Create repository scaffolding",
+      "category": "Infrastructure",
+      "priority": "high",
+      "status": "complete",
+      "dependencies": [],
+      "updated": "2026-10-22T20:28:00+01:00"
+    },
+    {
+      "id": "INF-02",
+      "task": "Add README.md",
+      "category": "Infrastructure",
+      "priority": "high",
+      "status": "complete",
+      "dependencies": ["INF-01"],
+      "updated": "2026-10-22T20:28:00+01:00"
+    },
+    {
+      "id": "INF-03",
+      "task": "Add roadmap.md",
+      "category": "Infrastructure",
+      "priority": "high",
+      "status": "complete",
+      "dependencies": ["INF-01"],
+      "updated": "2026-10-22T20:28:00+01:00"
+    },
+    {
+      "id": "INF-04",
+      "task": "Add roadmap.json",
+      "category": "Infrastructure",
+      "priority": "high",
+      "status": "complete",
+      "dependencies": ["INF-03"],
+      "updated": "2026-10-22T20:28:00+01:00"
+    },
+    {
+      "id": "INF-05",
+      "task": "Add math_spine.tex",
+      "category": "Infrastructure",
+      "priority": "high",
+      "status": "complete",
+      "dependencies": ["INF-01"],
+      "updated": "2026-10-22T20:28:00+01:00"
+    },
+    {
+      "id": "INF-06",
+      "task": "Add Lean scaffolding",
+      "category": "Infrastructure",
+      "priority": "medium",
+      "status": "pending",
+      "dependencies": ["INF-05"],
+      "updated": "2026-10-22T20:28:00+01:00"
+    },
+    {
+      "id": "INF-07",
+      "task": "Create figures directory",
+      "category": "Infrastructure",
+      "priority": "medium",
+      "status": "pending",
+      "dependencies": ["INF-01"],
+      "updated": "2026-10-22T20:28:00+01:00"
+    },
+
+    {
+      "id": "TK-01",
+      "task": "Implement curvature.py",
+      "category": "Toolkit",
+      "priority": "high",
+      "status": "pending",
+      "dependencies": ["INF-01", "INF-05"],
+      "updated": "2026-10-22T20:28:00+01:00"
+    },
+    {
+      "id": "TK-02",
+      "task": "Implement spectral.py",
+      "category": "Toolkit",
+      "priority": "high",
+      "status": "pending",
+      "dependencies": ["INF-01", "INF-05"],
+      "updated": "2026-10-22T20:28:00+01:00"
+    },
+    {
+      "id": "TK-03",
+      "task": "Implement holonomy.py",
+      "category": "Toolkit",
+      "priority": "high",
+      "status": "pending",
+      "dependencies": ["INF-01", "INF-05"],
+      "updated": "2026-10-22T20:28:00+01:00"
+    },
+    {
+      "id": "TK-04",
+      "task": "Implement topology.py",
+      "category": "Toolkit",
+      "priority": "high",
+      "status": "pending",
+      "dependencies": ["INF-01", "INF-05"],
+      "updated": "2026-10-22T20:28:00+01:00"
+    },
+    {
+      "id": "TK-05",
+      "task": "Implement fusion.py",
+      "category": "Toolkit",
+      "priority": "high",
+      "status": "pending",
+      "dependencies": ["INF-01", "INF-05"],
+      "updated": "2026-10-22T20:28:00+01:00"
+    },
+    {
+      "id": "TK-06",
+      "task": "Implement compare.py",
+      "category": "Toolkit",
+      "priority": "medium",
+      "status": "pending",
+      "dependencies": ["TK-01", "TK-02", "TK-03", "TK-04", "TK-05"],
+      "updated": "2026-10-22T20:28:00+01:00"
+    },
+    {
+      "id": "TK-07",
+      "task": "Write operator tests",
+      "category": "Toolkit",
+      "priority": "medium",
+      "status": "pending",
+      "dependencies": ["TK-01", "TK-02", "TK-03", "TK-04", "TK-05"],
+      "updated": "2026-10-22T20:28:00+01:00"
+    },
+    {
+      "id": "TK-08",
+      "task": "Create example notebooks",
+      "category": "Toolkit",
+      "priority": "medium",
+      "status": "pending",
+      "dependencies": ["TK-01", "TK-02", "TK-03", "TK-04", "TK-05"],
+      "updated": "2026-10-22T20:28:00+01:00"
+    },
+
+    {
+      "id": "PP-01",
+      "task": "Draft Introduction",
+      "category": "Preprint",
+      "priority": "high",
+      "status": "pending",
+      "dependencies": ["INF-05"],
+      "updated": "2026-10-22T20:28:00+01:00"
+    },
+    {
+      "id": "PP-02",
+      "task": "Draft Related Work",
+      "category": "Preprint",
+      "priority": "high",
+      "status": "pending",
+      "dependencies": ["PP-01"],
+      "updated": "2026-10-22T20:28:00+01:00"
+    },
+    {
+      "id": "PP-03",
+      "task": "Draft Taxonomy",
+      "category": "Preprint",
+      "priority": "high",
+      "status": "pending",
+      "dependencies": ["PP-01", "TK-01", "TK-02", "TK-03", "TK-04", "TK-05"],
+      "updated": "2026-10-22T20:28:00+01:00"
+    },
+    {
+      "id": "PP-04",
+      "task": "Draft Operators Section",
+      "category": "Preprint",
+      "priority": "high",
+      "status": "pending",
+      "dependencies": ["PP-03"],
+      "updated": "2026-10-22T20:28:00+01:00"
+    },
+    {
+      "id": "PP-05",
+      "task": "Draft Toolkit Integration",
+      "category": "Preprint",
+      "priority": "medium",
+      "status": "pending",
+      "dependencies": ["TK-01", "TK-02", "TK-03", "TK-04", "TK-05", "TK-06"],
+      "updated": "2026-10-22T20:28:00+01:00"
+    },
+    {
+      "id": "PP-06",
+      "task": "Draft Experiments",
+      "category": "Preprint",
+      "priority": "medium",
+      "status": "pending",
+      "dependencies": ["TK-07", "TK-08"],
+      "updated": "2026-10-22T20:28:00+01:00"
+    },
+    {
+      "id": "PP-07",
+      "task": "Draft Discussion",
+      "category": "Preprint",
+      "priority": "medium",
+      "status": "pending",
+      "dependencies": ["PP-06"],
+      "updated": "2026-10-22T20:28:00+01:00"
+    },
+    {
+      "id": "PP-08",
+      "task": "Draft Conclusion",
+      "category": "Preprint",
+      "priority": "medium",
+      "status": "pending",
+      "dependencies": ["PP-07"],
+      "updated": "2026-10-22T20:28:00+01:00"
+    },
+    {
+      "id": "PP-09",
+      "task": "Add APA References",
+      "category": "Preprint",
+      "priority": "medium",
+      "status": "pending",
+      "dependencies": ["PP-08"],
+      "updated": "2026-10-22T20:28:00+01:00"
+    },
+
+    {
+      "id": "MATH-01",
+      "task": "Formalize curvature tensor",
+      "category": "Math Appendix",
+      "priority": "medium",
+      "status": "pending",
+      "dependencies": ["TK-01"],
+      "updated": "2026-10-22T20:28:00+01:00"
+    },
+    {
+      "id": "MATH-02",
+      "task": "Formalize spectral derivative",
+      "category": "Math Appendix",
+      "priority": "medium",
+      "status": "pending",
+      "dependencies": ["TK-02"],
+      "updated": "2026-10-22T20:28:00+01:00"
+    },
+    {
+      "id": "MATH-03",
+      "task": "Formalize holonomy operator",
+      "category": "Math Appendix",
+      "priority": "medium",
+      "status": "pending",
+      "dependencies": ["TK-03"],
+      "updated": "2026-10-22T20:28:00+01:00"
+    },
+    {
+      "id": "MATH-04",
+      "task": "Formalize topological rank operator",
+      "category": "Math Appendix",
+      "priority": "medium",
+      "status": "pending",
+      "dependencies": ["TK-04"],
+      "updated": "2026-10-22T20:28:00+01:00"
+    },
+    {
+      "id": "MATH-05",
+      "task": "Formalize fusion-field operator",
+      "category": "Math Appendix",
+      "priority": "medium",
+      "status": "pending",
+      "dependencies": ["TK-05"],
+      "updated": "2026-10-22T20:28:00+01:00"
+    },
+
+    {
+      "id": "LEAN-01",
+      "task": "Port operator definitions to Lean",
+      "category": "Lean Formalization",
+      "priority": "medium",
+      "status": "pending",
+      "dependencies": ["MATH-01", "MATH-02", "MATH-03", "MATH-04", "MATH-05"],
+      "updated": "2026-10-22T20:28:00+01:00"
+    },
+    {
+      "id": "LEAN-02",
+      "task": "Create lemma scaffolding",
+      "category": "Lean Formalization",
+      "priority": "medium",
+      "status": "pending",
+      "dependencies": ["LEAN-01"],
+      "updated": "2026-10-22T20:28:00+01:00"
+    },
+    {
+      "id": "LEAN-03",
+      "task": "Begin theorem development",
+      "category": "Lean Formalization",
+      "priority": "medium",
+      "status": "pending",
+      "dependencies": ["LEAN-02"],
+      "updated": "2026-10-22T20:28:00+01:00"
+    },
+
+    {
+      "id": "ARC-01",
+      "task": "Prepare Zenodo DOI",
+      "category": "Archival",
+      "priority": "low",
+      "status": "pending",
+      "dependencies": ["PP-09"],
+      "updated": "2026-10-22T20:28:00+01:00"
+    },
+    {
+      "id": "ARC-02",
+      "task": "Submit preprint to arXiv",
+      "category": "Archival",
+      "priority": "low",
+      "status": "pending",
+      "dependencies": ["ARC-01"],
+      "updated": "2026-10-22T20:28:00+01:00"
+    },
+    {
+      "id": "ARC-03",
+      "task": "Release toolkit",
+      "category": "Archival",
+      "priority": "low",
+      "status": "pending",
+      "dependencies": ["TK-06", "TK-07", "TK-08"],
+      "updated": "2026-10-22T20:28:00+01:00"
+    }
+  ]
+    }
