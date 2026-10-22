@@ -1,0 +1,225 @@
+% =====================================================================
+% 07-OperatorTheorems.tex
+% Geometric Hallucination Taxonomy — Mathematical Spine
+% Borealis S. Hedling — 2026
+% =====================================================================
+
+\section*{07. Operator Theorems}
+
+This module formalizes the core theorems linking geometric instability
+to hallucination behavior in the Geometric Hallucination Taxonomy (GHT).
+Each theorem establishes a precise implication between operator-level
+instability and latent trajectory divergence.
+
+All results rely on the foundations (00) and operator modules (01–05).
+
+% ---------------------------------------------------------------------
+\subsection*{7.1 Preliminaries}
+
+Let $x(t)$ be a latent trajectory on a smooth manifold $M$.
+
+Let the operator outputs be:
+\[
+K_t, \quad
+\Delta_\lambda(t), \quad
+H_{\gamma_t}, \quad
+\tau_t, \quad
+F_t.
+\]
+
+Let the unified stability region be:
+\[
+\Omega
+= \Omega_{\kappa}
+\cap \Omega_{\sigma}
+\cap \Omega_{h}
+\cap \Omega_{\tau}
+\cap \Omega_{f}.
+\]
+
+A trajectory is stable if $x(t) \in \Omega$ for all $t$.
+
+% ---------------------------------------------------------------------
+\subsection*{7.2 Curvature Instability Implies Divergence}
+
+\begin{theorem}[Curvature Divergence]
+If there exists $t_0$ such that
+\[
+|K_{t_0}| > \kappa_{\mathrm{thr}},
+\]
+then there exists $\varepsilon > 0$ such that geodesics emanating from
+$x(t_0)$ diverge at rate at least $\varepsilon$.
+
+Formally, for sufficiently small $s$,
+\[
+d(\gamma_1(s), \gamma_2(s)) \ge \varepsilon s,
+\]
+where $\gamma_1$ and $\gamma_2$ are geodesics in the unstable plane.
+\end{theorem}
+
+\begin{proof}[Sketch]
+Sectional curvature controls geodesic deviation via the Jacobi equation.
+Exceeding the threshold forces exponential or hyperbolic divergence.
+\end{proof}
+
+% ---------------------------------------------------------------------
+\subsection*{7.3 Spectral Instability Implies Local Expansion or Collapse}
+
+\begin{theorem}[Spectral Cascade]
+If
+\[
+|\Delta_\lambda(t_0)| > \sigma_{\mathrm{thr}},
+\]
+then the local linearization of the update rule $\Phi$ at $x(t_0)$
+exhibits either expansion or collapse.
+
+Formally,
+\[
+\|A_{t_0+1} v\| \ge c \|A_{t_0} v\|
+\]
+for some $v$ and constant $c > 1$, or the analogous collapse inequality.
+\end{theorem}
+
+\begin{proof}[Sketch]
+Eigenvalue drift controls the spectral radius of $A_t$. Large drift
+forces the radius to change by a multiplicative factor.
+\end{proof}
+
+% ---------------------------------------------------------------------
+\subsection*{7.4 Holonomy Drift Implies Rotational Instability}
+
+\begin{theorem}[Holonomy Drift]
+If
+\[
+\|H_{\gamma_{t_0}}\| > h_{\mathrm{thr}},
+\]
+then parallel transport around $\gamma_{t_0}$ induces rotational or
+shearing instability in $T_{x(t_0)}M$.
+
+Formally, there exists $v$ such that
+\[
+\|H_{\gamma_{t_0}} v\| \ge \varepsilon
+\]
+for some $\varepsilon > 0$.
+\end{theorem}
+
+\begin{proof}[Sketch]
+Holonomy measures failure of parallel transport to preserve direction.
+Exceeding the threshold forces nontrivial rotation or shear.
+\end{proof}
+
+% ---------------------------------------------------------------------
+\subsection*{7.5 Metric Rank Loss Implies Topological Collapse}
+
+\begin{theorem}[Rank Collapse]
+If
+\[
+\tau_{t_0} < n,
+\]
+then $x(t_0)$ lies on the collapse surface
+\[
+\Sigma = \{ p : \det(g_p) = 0 \}.
+\]
+
+Furthermore, distances and angles become ill-defined in a neighborhood of
+$x(t_0)$.
+\end{theorem}
+
+\begin{proof}[Sketch]
+Rank loss implies determinant zero. Degenerate metrics fail to define
+inner products, collapsing local geometry.
+\end{proof}
+
+% ---------------------------------------------------------------------
+\subsection*{7.6 Fusion Dominance Implies Nonlinear Spike}
+
+\begin{theorem}[Fusion Spike]
+If
+\[
+\|F_{t_0}\|_g > f_{\mathrm{thr}},
+\]
+and nonlinear dominance holds:
+\[
+\|\gamma \sigma(x(t_0), y(t_0))\|_g
+\gg
+\|\alpha x(t_0) + \beta y(t_0)\|_g,
+\]
+then the fused representation exhibits a nonlinear spike.
+
+Formally,
+\[
+\|F_{t_0}\|_g \ge c
+\]
+for some $c > f_{\mathrm{thr}}$.
+\end{theorem}
+
+\begin{proof}[Sketch]
+Dominance forces the nonlinear term to control the output norm.
+\end{proof}
+
+% ---------------------------------------------------------------------
+\subsection*{7.7 Unified Instability Implies Hallucination}
+
+\begin{theorem}[Unified Hallucination Theorem]
+If a latent trajectory satisfies
+\[
+\exists t_0 : x(t_0) \notin \Omega,
+\]
+and instability propagates through the interaction map $\mathcal{I}$,
+then the trajectory exhibits hallucination behavior.
+
+Formally,
+\[
+\{ t : x(t) \notin \Omega \} \text{ is infinite}.
+\]
+\end{theorem}
+
+\begin{proof}[Sketch]
+Instability in any operator propagates through $\mathcal{I}$, producing
+persistent instability. This matches the definition of hallucination.
+\end{proof}
+
+% ---------------------------------------------------------------------
+\subsection*{7.8 Operator Interaction Theorem}
+
+\begin{theorem}[Operator Interaction]
+Instability in one operator may induce instability in another. For
+example:
+\[
+|K_t| > \kappa_{\mathrm{thr}}
+\;\Rightarrow\;
+|\Delta_\lambda(t+1)| > \sigma_{\mathrm{thr}},
+\]
+under appropriate geometric conditions.
+
+Similar implications hold for other operator pairs.
+\end{theorem}
+
+\begin{proof}[Sketch]
+Curvature blowout distorts local linearization, affecting eigenvalues.
+Other interactions follow from geometric coupling.
+\end{proof}
+
+% ---------------------------------------------------------------------
+\subsection*{7.9 Global Instability Implies Divergence}
+
+\begin{theorem}[Global Divergence]
+If instability persists,
+\[
+\{ t : x(t) \notin \Omega \} \text{ is infinite},
+\]
+then the latent trajectory diverges from any stable region.
+
+Formally,
+\[
+\limsup_{t \to \infty} d(x(t), \Omega) > 0.
+\]
+\end{theorem}
+
+\begin{proof}[Sketch]
+Persistent instability prevents re-entry into $\Omega$.
+\end{proof}
+
+% =====================================================================
+% End of 07-OperatorTheorems.tex
+% =====================================================================
