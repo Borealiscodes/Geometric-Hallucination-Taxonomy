@@ -1,0 +1,123 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{geometry}
+\geometry{margin=1in}
+
+\title{Mathematical Spine for the Geometric Hallucination Taxonomy}
+\author{Borealis S. Hedling}
+\date{2026}
+
+\begin{document}
+\maketitle
+
+\section*{Overview}
+This document provides the formal mathematical backbone for the 
+\textit{Geometric Hallucination Taxonomy (GHT)}. 
+It defines the geometric operators used to classify hallucinations in 
+structural AI systems, including curvature, spectral derivatives, holonomy, 
+topological rank instability, and fusion-field nonlinearity.
+
+Each operator is defined independently of model architecture, enabling 
+future formal verification and Lean-based proof development.
+
+\section{Curvature-Driven Hallucinations (CDH)}
+Hallucinations arising from instability in the latent manifold's metric tensor 
+$g_{ij}$ are modeled using the Riemann curvature tensor.
+
+\subsection{Riemann Curvature Tensor}
+Given a smooth manifold $(M, g)$ with Levi-Civita connection $\nabla$, the 
+Riemann curvature tensor is defined as:
+\[
+R(X,Y)Z = \nabla_X \nabla_Y Z - \nabla_Y \nabla_X Z - \nabla_{[X,Y]} Z.
+\]
+
+In coordinates:
+\[
+R^i_{\ jkl} = \partial_k \Gamma^i_{\ jl} - \partial_l \Gamma^i_{\ jk}
++ \Gamma^i_{\ km}\Gamma^m_{\ jl} - \Gamma^i_{\ lm}\Gamma^m_{\ jk}.
+\]
+
+\subsection{Sectional Curvature}
+Hallucination curvature signature:
+\[
+K(v) = R_{ijkl} v^i v^j v^k v^l.
+\]
+
+Positive blowout, negative collapse, and oscillatory curvature correspond to 
+distinct hallucination modes.
+
+\section{Spectral Cascade Hallucinations (SCH)}
+Spectral instabilities are modeled using eigenvalue derivatives of the 
+representation operator.
+
+\subsection{Spectral Drift}
+Let $\lambda_i(t)$ be the $i$-th eigenvalue over a representation trajectory.
+Define:
+\[
+\Delta_\lambda = \frac{d\lambda_i}{dt}.
+\]
+
+Large $\Delta_\lambda$ magnitudes correspond to cascade onset.
+
+\subsection{Spectral Collapse}
+Rank loss is detected via:
+\[
+\text{rank}(A(t)) < \text{rank}(A(t-\epsilon)).
+\]
+
+\section{Holonomy Drift Hallucinations (HDH)}
+Holonomy captures semantic drift arising from non-trivial parallel transport.
+
+\subsection{Parallel Transport}
+Given a loop $\gamma : [0,1] \to M$, parallel transport yields:
+\[
+P_\gamma : T_{\gamma(0)}M \to T_{\gamma(0)}M.
+\]
+
+\subsection{Holonomy Operator}
+Hallucination drift signature:
+\[
+H = P_\gamma - I.
+\]
+
+Non-zero holonomy indicates rotational semantic drift.
+
+\section{Topological Instability Hallucinations (TIH)}
+Topological collapse is modeled using rank instability of the metric tensor.
+
+\subsection{Metric Rank Operator}
+Define:
+\[
+\tau = \text{rank}(g + \epsilon I).
+\]
+
+Rank drops correspond to collapse surfaces and discontinuities.
+
+\section{Fusion-Field Hallucinations (FFH)}
+Fusion-field hallucinations arise from nonlinear blending of latent concepts.
+
+\subsection{Fusion Operator}
+Let $x, y$ be latent representations. Define:
+\[
+F(x,y) = \alpha x + \beta y + \gamma \phi(x,y),
+\]
+where $\phi$ is a nonlinear interaction term.
+
+Nonlinear fusion spikes correspond to chimera hallucinations.
+
+\section{Future Lean Formalization}
+The following definitions will be ported into Lean:
+
+\begin{itemize}
+    \item Riemann curvature tensor
+    \item Sectional curvature operator
+    \item Spectral derivative operator
+    \item Holonomy operator
+    \item Metric rank operator
+    \item Fusion-field operator
+\end{itemize}
+
+These definitions will support theorem development for hallucination 
+classification and operator stability.
+
+\end{document}
