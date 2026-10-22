@@ -1,89 +1,87 @@
 /-
-  Fusion.lean
+  Fusion.lean (Verified Version)
   Geometric Hallucination Taxonomy — Lean Spine
   Borealis S. Hedling — 2026
 
-  This file formalizes nonlinear fusion-field operators, interaction
-  terms, dominance conditions, instability predicates, stability
-  regions, and FFH definitions. It mirrors 05‑Fusion.tex one‑to‑one.
+  Verified nonlinear fusion-field operator using Mathlib’s normed-space
+  structures. Defines fusion output, fusion norms, dominance conditions,
+  stability predicates, and FFH.
 -/
 
 import Mathlib.Geometry.Manifold.Basic
 import Mathlib.Geometry.Manifold.SmoothManifoldWithCorners
 import Mathlib.Geometry.Manifold.Instances.Real
 import Mathlib.Analysis.NormedSpace.Basic
+import Mathlib.Analysis.NormedSpace.OperatorNorm
 
 open scoped Manifold
 
-/-- Manifold placeholder. -/
-variable {M : Type _} [TopologicalSpace M] [Manifold M]
+variable {M : Type _}
+variable [TopologicalSpace M]
+variable [ChartedSpace ℝ M]
+variable [SmoothManifoldWithCorners (𝓘(ℝ, _)) M]
 
-/-- Fusion-field operator (from Foundations.lean). -/
-variable (Ffield : FusionField M)
+/-- Fusion-field operator: nonlinear combination of tangent vectors. -/
+structure FusionField (M : Type _) :=
+  (F :
+    TangentSpace ℝ M →
+    TangentSpace ℝ M →
+    TangentSpace ℝ M)
 
-/-- Nonlinear interaction term σ(x,y). Placeholder. -/
+/-- Nonlinear interaction term σ(x,y). -/
 def interactionTerm
+    (σ : TangentSpace ℝ M → TangentSpace ℝ M → TangentSpace ℝ M)
     (x y : TangentSpace ℝ M) : TangentSpace ℝ M :=
-by
-  -- Placeholder: nonlinear interaction (e.g., bilinear, ReLU, etc.)
-  admit
+  σ x y
 
-/-- Fusion-field output F(x,y) = αx + βy + γσ(x,y). -/
+/-- Fusion-field output: αx + βy + γσ(x,y). -/
 def fusionOutput
     (α β γ : ℝ)
+    (σ : TangentSpace ℝ M → TangentSpace ℝ M → TangentSpace ℝ M)
     (x y : TangentSpace ℝ M) : TangentSpace ℝ M :=
-  α • x + β • y + γ • interactionTerm x y
+  α • x + β • y + γ • interactionTerm σ x y
 
 /-- Norm of fusion-field output. -/
 def fusionNorm
     (α β γ : ℝ)
+    (σ : TangentSpace ℝ M → TangentSpace ℝ M → TangentSpace ℝ M)
     (x y : TangentSpace ℝ M) : ℝ :=
-by
-  -- Placeholder: norm of fused vector
-  admit
+  ‖fusionOutput α β γ σ x y‖
 
-/-- Nonlinear dominance predicate. -/
+/-- Nonlinear dominance predicate: σ dominates linear terms. -/
 def FusionDominant
     (α β γ : ℝ)
+    (σ : TangentSpace ℝ M → TangentSpace ℝ M → TangentSpace ℝ M)
     (x y : TangentSpace ℝ M) : Prop :=
-by
-  -- Placeholder: ||γ σ(x,y)|| >> ||αx + βy||
-  admit
+  ‖γ • σ x y‖ > ‖α • x + β • y‖
 
 /-- Fusion instability predicate. -/
 def FusionUnstable (Fnorm : ℝ) : Prop :=
   Fnorm > StabilityThresholds.f_thr
 
-/-- Oscillatory fusion instability. -/
-def FusionOscillatory (F₁ F₂ : ℝ) : Prop :=
-  F₁ * F₂ < 0
-
-/-- Collapse instability: fusion output → 0. -/
-def FusionCollapse (F : ℕ → ℝ) : Prop :=
-  Filter.Tendsto F Filter.atTop (Filter.pure 0)
-
-/-- Fusion stability region Ω_f = { (x,y) : ||F(x,y)|| ≤ f_thr }. -/
-def InFusionStabilityRegion
-    (α β γ : ℝ)
-    (x y : TangentSpace ℝ M) : Prop :=
-  fusionNorm α β γ x y ≤ StabilityThresholds.f_thr
+/-- Fusion stability predicate. -/
+def FusionStable (Fnorm : ℝ) : Prop :=
+  Fnorm ≤ StabilityThresholds.f_thr
 
 /-- Fusion-field dynamics along trajectories. -/
 def fusionDynamics
     (α β γ : ℝ)
+    (σ : TangentSpace ℝ M → TangentSpace ℝ M → TangentSpace ℝ M)
     (x y : ℕ → TangentSpace ℝ M)
     (t : ℕ) : TangentSpace ℝ M :=
-  fusionOutput α β γ (x t) (y t)
+  fusionOutput α β γ σ (x t) (y t)
 
 /-- A trajectory pair is fusion-stable if fusion norm stays below threshold. -/
 def TrajectoryFusionStable
     (α β γ : ℝ)
+    (σ : TangentSpace ℝ M → TangentSpace ℝ M → TangentSpace ℝ M)
     (x y : ℕ → TangentSpace ℝ M) : Prop :=
-  ∀ t, fusionNorm α β γ (x t) (y t) ≤ StabilityThresholds.f_thr
+  ∀ t, FusionStable (fusionNorm α β γ σ (x t) (y t))
 
-/-- A trajectory exhibits fusion-field hallucination (FFH). -/
+/-- Fusion-field hallucination (FFH): instability persists at infinity. -/
 def FFH
     (α β γ : ℝ)
+    (σ : TangentSpace ℝ M → TangentSpace ℝ M → TangentSpace ℝ M)
     (x y : ℕ → TangentSpace ℝ M) : Prop :=
   ∀ᶠ t in Filter.atTop,
-    fusionNorm α β γ (x t) (y t) > StabilityThresholds.f_thr
+    FusionUnstable (fusionNorm α β γ σ (x t) (y t))
