@@ -1,0 +1,194 @@
+% =====================================================================
+% 00-Foundations.tex
+% Geometric Hallucination Taxonomy — Mathematical Spine
+% Borealis S. Hedling — 2026
+% =====================================================================
+
+\section*{00. Foundations}
+
+This document establishes the geometric foundations used throughout the
+mathematical spine of the Geometric Hallucination Taxonomy (GHT). All
+operators defined in subsequent modules rely on the structures introduced
+here: smooth manifolds, Riemannian metrics, Levi–Civita connections,
+tangent bundles, and latent trajectories. The presentation follows
+standard differential–geometric conventions and is compatible with
+mechanized verification in Lean (Appendix B).
+
+% ---------------------------------------------------------------------
+\subsection*{0.1 Smooth Manifold}
+
+Let $M$ be a smooth manifold of dimension $n$, modeled on $\mathbb{R}^n$.
+We denote its tangent bundle by $TM$ and write $T_p M$ for the tangent
+space at a point $p \in M$.
+
+Charts are written as $(U, \varphi)$ with $\varphi : U \to \mathbb{R}^n$
+a diffeomorphism onto its image. We assume $M$ is Hausdorff and second
+countable.
+
+% ---------------------------------------------------------------------
+\subsection*{0.2 Riemannian Metric}
+
+A Riemannian metric on $M$ is a smooth assignment
+\[
+g : p \mapsto g_p,
+\]
+where each $g_p$ is a positive–definite inner product on $T_p M$.
+In local coordinates $(x^1, \dots, x^n)$, the metric is represented by
+a symmetric matrix $(g_{ij})$ with
+\[
+g_{ij}(p) = g_p\!\left( \frac{\partial}{\partial x^i},
+                       \frac{\partial}{\partial x^j} \right).
+\]
+
+We denote the inverse metric by $(g^{ij})$.
+
+% ---------------------------------------------------------------------
+\subsection*{0.3 Levi–Civita Connection}
+
+The Levi–Civita connection $\nabla$ is the unique torsion–free connection
+compatible with the metric:
+\[
+\nabla g = 0, \qquad T(X,Y) = \nabla_X Y - \nabla_Y X - [X,Y] = 0.
+\]
+
+In coordinates, the Christoffel symbols are
+\[
+\Gamma^i_{\;jk}
+= \frac{1}{2} g^{im}
+\left(
+\partial_j g_{km}
++ \partial_k g_{jm}
+- \partial_m g_{jk}
+\right).
+\]
+
+Covariant differentiation of a vector field $Y = Y^i \partial_i$ is
+\[
+\nabla_X Y
+= X^j \left( \partial_j Y^i + \Gamma^i_{\;jk} Y^k \right) \partial_i.
+\]
+
+% ---------------------------------------------------------------------
+\subsection*{0.4 Tangent Vectors and Norms}
+
+For $v \in T_p M$, the norm induced by the metric is
+\[
+\|v\|_g = \sqrt{g_p(v,v)}.
+\]
+
+Inner products are written $\langle u, v \rangle_g$.
+
+% ---------------------------------------------------------------------
+\subsection*{0.5 Latent Trajectories}
+
+A latent trajectory is a smooth curve
+\[
+x : I \to M,
+\]
+where $I \subseteq \mathbb{R}$ is an interval representing inference
+steps. In discrete settings (as used in the Python toolkit), we write
+\[
+x_{t+1} = \Phi(x_t),
+\]
+where $\Phi : M \to M$ is a smooth update rule.
+
+The velocity vector is
+\[
+\dot{x}(t) = \frac{d}{dt} x(t) \in T_{x(t)} M.
+\]
+
+% ---------------------------------------------------------------------
+\subsection*{0.6 Geodesics}
+
+A geodesic $\gamma$ satisfies
+\[
+\nabla_{\dot{\gamma}} \dot{\gamma} = 0.
+\]
+
+In coordinates:
+\[
+\ddot{\gamma}^i + \Gamma^i_{\;jk} \dot{\gamma}^j \dot{\gamma}^k = 0.
+\]
+
+Geodesics are used throughout the taxonomy to measure curvature–driven
+instability.
+
+% ---------------------------------------------------------------------
+\subsection*{0.7 Parallel Transport}
+
+Given a curve $\gamma : [0,1] \to M$, parallel transport of a vector
+field $V(t)$ along $\gamma$ satisfies
+\[
+\nabla_{\dot{\gamma}(t)} V(t) = 0.
+\]
+
+The solution defines a linear map
+\[
+P_\gamma : T_{\gamma(0)} M \to T_{\gamma(1)} M.
+\]
+
+Parallel transport is the foundation for holonomy drift analysis.
+
+% ---------------------------------------------------------------------
+\subsection*{0.8 Metric Rank and Degeneracy}
+
+The metric tensor $g$ may lose rank in unstable regions. We define the
+rank at $p$ as
+\[
+\tau(p) = \operatorname{rank}(g_p).
+\]
+
+A collapse surface is a set
+\[
+\Sigma = \{ p \in M : \det(g_p) = 0 \}.
+\]
+
+These structures underpin topological instability analysis.
+
+% ---------------------------------------------------------------------
+\subsection*{0.9 Fusion–Field Preliminaries}
+
+Given $x, y \in T_p M$, a fusion–field is a smooth map
+\[
+F : TM \times TM \to TM
+\]
+that blends representations. Nonlinear interaction terms are denoted
+$\sigma(x,y)$ and must satisfy smoothness and bilinearity constraints
+specified in Module 05.
+
+% ---------------------------------------------------------------------
+\subsection*{0.10 Stability Thresholds}
+
+Each operator in the taxonomy uses a stability threshold:
+\[
+\kappa_{\mathrm{thr}}, \quad
+\sigma_{\mathrm{thr}}, \quad
+h_{\mathrm{thr}}, \quad
+\tau_{\mathrm{thr}}, \quad
+f_{\mathrm{thr}}.
+\]
+
+These thresholds define instability regimes and are treated as fixed
+positive constants throughout the spine.
+
+% ---------------------------------------------------------------------
+\subsection*{0.11 Notational Conventions}
+
+\begin{itemize}
+\item $X,Y,Z$ denote vector fields.
+\item $u,v$ denote tangent vectors.
+\item $g_{ij}$ and $g^{ij}$ denote metric components.
+\item $\Gamma^i_{\;jk}$ denote Christoffel symbols.
+\item $R^i_{\;jkl}$ denotes curvature tensor components.
+\item $\lambda(t)$ denotes eigenvalues of latent representations.
+\item $P_\gamma$ denotes parallel transport.
+\item $H = P_\gamma - I$ denotes holonomy.
+\item $\tau$ denotes metric rank.
+\item $F(x,y)$ denotes fusion–field output.
+\end{itemize}
+
+These conventions remain consistent across all modules.
+
+% =====================================================================
+% End of 00-Foundations.tex
+% =====================================================================
