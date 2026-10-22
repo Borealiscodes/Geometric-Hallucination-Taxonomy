@@ -1,0 +1,134 @@
+{
+  "project": "Geometric Hallucination Taxonomy (GHT)",
+  "version": "1.0",
+  "author": "Borealis S. Hedling",
+  "year": 2026,
+  "overview": {
+    "description": "A structural-AI geometry project formalizing hallucinations as manifold-level instabilities using curvature, spectral, holonomy, topological, and fusion-field operators.",
+    "components": [
+      "Unified preprint",
+      "Python geometric-diagnostic toolkit",
+      "LaTeX mathematical spine",
+      "Lean formalization scaffolding",
+      "Figures and diagrams",
+      "Reproducible notebooks",
+      "Operator-level tests"
+    ]
+  },
+  "phases": [
+    {
+      "phase": "Infrastructure",
+      "tasks": [
+        "Create repository scaffolding",
+        "Add README.md",
+        "Add roadmap.md",
+        "Add math_spine.tex",
+        "Add Lean scaffolding",
+        "Create figures directory"
+      ]
+    },
+    {
+      "phase": "Toolkit Implementation",
+      "tasks": [
+        "Implement curvature.py",
+        "Implement spectral.py",
+        "Implement holonomy.py",
+        "Implement topology.py",
+        "Implement fusion.py",
+        "Implement compare.py",
+        "Write operator tests",
+        "Create example notebooks"
+      ]
+    },
+    {
+      "phase": "Preprint Drafting",
+      "tasks": [
+        "Draft Introduction",
+        "Draft Related Work",
+        "Draft Taxonomy",
+        "Draft Operators",
+        "Draft Toolkit Integration",
+        "Draft Experiments",
+        "Draft Discussion",
+        "Draft Conclusion",
+        "Add APA references"
+      ]
+    },
+    {
+      "phase": "Math Appendix",
+      "tasks": [
+        "Formalize curvature tensor",
+        "Formalize spectral derivative",
+        "Formalize holonomy operator",
+        "Formalize topological rank operator",
+        "Formalize fusion-field operator",
+        "Add geometric lemmas"
+      ]
+    },
+    {
+      "phase": "Lean Formalization",
+      "tasks": [
+        "Port operator definitions to Lean",
+        "Create lemma scaffolding",
+        "Begin theorem development",
+        "Verify operator stability"
+      ]
+    },
+    {
+      "phase": "Archival",
+      "tasks": [
+        "Prepare Zenodo DOI",
+        "Submit preprint to arXiv",
+        "Release toolkit",
+        "Publish documentation"
+      ]
+    }
+  ],
+  "milestones": {
+    "M1": "Toolkit Complete",
+    "M2": "Preprint Complete",
+    "M3": "Math Spine Complete",
+    "M4": "Lean Definitions Complete",
+    "M5": "Public Release"
+  },
+  "file_structure": {
+    "root": [
+      "README.md",
+      "roadmap.md",
+      "roadmap.json"
+    ],
+    "preprint": [
+      "preprint.md",
+      "math_spine.tex",
+      "lean_formalization/",
+      "figures/"
+    ],
+    "toolkit": [
+      "curvature.py",
+      "spectral.py",
+      "holonomy.py",
+      "topology.py",
+      "fusion.py",
+      "compare.py"
+    ],
+    "tests": [
+      "test_curvature.py",
+      "test_spectral.py",
+      "test_holonomy.py",
+      "test_topology.py",
+      "test_fusion.py"
+    ],
+    "examples": [
+      "curvature_demo.ipynb",
+      "spectral_demo.ipynb",
+      "holonomy_demo.ipynb",
+      "topology_demo.ipynb",
+      "fusion_demo.ipynb"
+    ]
+  },
+  "next_steps": [
+    "Generate JSON task tracker",
+    "Begin toolkit implementation",
+    "Draft Section 1 of preprint"
+  ]
+}
