@@ -1,0 +1,166 @@
+% =====================================================================
+% 03-Holonomy.tex
+% Geometric Hallucination Taxonomy — Mathematical Spine
+% Borealis S. Hedling — 2026
+% =====================================================================
+
+\section*{03. Holonomy Operator}
+
+This module formalizes parallel transport, holonomy, and drift-based
+instability criteria used to define Holonomy Drift Hallucinations (HDH)
+in the Geometric Hallucination Taxonomy (GHT). All definitions rely on
+the geometric foundations established in 00-Foundations.tex.
+
+% ---------------------------------------------------------------------
+\subsection*{3.1 Parallel Transport Along Curves}
+
+Let $\gamma : [0,1] \to M$ be a smooth curve. A vector field
+$V(t) \in T_{\gamma(t)}M$ is said to be parallel along $\gamma$ if
+\[
+\nabla_{\dot{\gamma}(t)} V(t) = 0.
+\]
+
+Given an initial vector $V(0) \in T_{\gamma(0)}M$, the parallel transport
+equation has a unique solution $V(t)$ for all $t \in [0,1]$.
+
+Parallel transport defines a linear map
+\[
+P_\gamma : T_{\gamma(0)}M \to T_{\gamma(1)}M,
+\]
+called the parallel transport operator along $\gamma$.
+
+% ---------------------------------------------------------------------
+\subsection*{3.2 Closed Loops and Holonomy}
+
+If $\gamma$ is a closed loop, i.e.
+\[
+\gamma(0) = \gamma(1),
+\]
+then parallel transport defines a linear endomorphism
+\[
+P_\gamma : T_{\gamma(0)}M \to T_{\gamma(0)}M.
+\]
+
+The holonomy operator is defined as
+\[
+H_\gamma = P_\gamma - I,
+\]
+where $I$ is the identity map on $T_{\gamma(0)}M$.
+
+Holonomy measures the failure of parallel transport to return a vector
+to its original direction after traversing a closed loop.
+
+% ---------------------------------------------------------------------
+\subsection*{3.3 Holonomy Group}
+
+The holonomy group at $p \in M$ is
+\[
+\mathrm{Hol}(p)
+= \{ P_\gamma : \gamma \text{ is a loop based at } p \}.
+\]
+
+This group is a Lie subgroup of $\mathrm{GL}(T_p M)$ and encodes the
+global geometric structure of the manifold.
+
+In the context of GHT, holonomy drift corresponds to instability in
+parallel transport around latent loops.
+
+% ---------------------------------------------------------------------
+\subsection*{3.4 Holonomy Norm}
+
+Given a holonomy operator $H_\gamma$, we define its norm by
+\[
+\|H_\gamma\| = \sup_{\|v\|_g = 1} \|H_\gamma v\|_g.
+\]
+
+This norm measures the magnitude of rotational or shearing drift induced
+by the loop $\gamma$.
+
+% ---------------------------------------------------------------------
+\subsection*{3.5 Holonomy Drift Instability}
+
+A holonomy drift instability occurs when
+\[
+\|H_\gamma\| > h_{\mathrm{thr}}.
+\]
+
+Directional asymmetry occurs when
+\[
+\|H_\gamma\| \neq \|H_{\gamma^{-1}}\|,
+\]
+where $\gamma^{-1}$ is the loop traversed in reverse.
+
+Oscillatory drift occurs when successive loops satisfy
+\[
+H_{\gamma_{t+1}} \cdot H_{\gamma_t} < 0
+\]
+in an appropriate operator sense (e.g., alternating dominant eigenvalues).
+
+These behaviors correspond to distinct HDH subtypes.
+
+% ---------------------------------------------------------------------
+\subsection*{3.6 Holonomy Along Latent Trajectories}
+
+Let $x(t)$ be a latent trajectory. A closed loop may be formed by
+concatenating segments of the trajectory:
+\[
+\gamma = x|_{[t_0,t_1]} \ast x|_{[t_1,t_2]} \ast \cdots \ast x|_{[t_k,t_0]}.
+\]
+
+Holonomy drift along such loops indicates instability in the latent
+reasoning path.
+
+In particular:
+\begin{itemize}
+\item rotational drift corresponds to semantic rotation,
+\item shearing drift corresponds to representational distortion,
+\item asymmetric drift corresponds to directional instability.
+\end{itemize}
+
+These geometric interpretations motivate the HDH classification.
+
+% ---------------------------------------------------------------------
+\subsection*{3.7 Holonomy Stability Region}
+
+Define the holonomy stability region
+\[
+\Omega_h
+= \{ p \in M : \|H_\gamma\| \le h_{\mathrm{thr}}
+   \text{ for all loops } \gamma \text{ based at } p \}.
+\]
+
+A latent trajectory is holonomy–stable if $x(t) \in \Omega_h$ for all $t$.
+
+% ---------------------------------------------------------------------
+\subsection*{3.8 Discrete Approximation}
+
+In numerical settings, parallel transport is approximated using discrete
+updates:
+\[
+V_{t+1}
+= V_t - \Gamma(x_t)(\dot{x}_t, V_t),
+\]
+where $\Gamma$ denotes Christoffel symbols.
+
+Holonomy is computed by composing discrete transport operators around
+synthetic loops.
+
+The Python toolkit implements this approximation and validates it in
+\texttt{/tests/test\_holonomy.py}.
+
+% ---------------------------------------------------------------------
+\subsection*{3.9 Holonomy Drift Hallucinations (HDH)}
+
+A latent trajectory exhibits HDH if there exists a sequence of loops
+$\gamma_t$ such that
+\[
+\|H_{\gamma_t}\| > h_{\mathrm{thr}}
+\quad \text{for infinitely many } t.
+\]
+
+Equivalently, HDH occurs when holonomy instability prevents the latent
+trajectory from maintaining consistent parallel transport structure.
+
+% =====================================================================
+% End of 03-Holonomy.tex
+% =====================================================================
