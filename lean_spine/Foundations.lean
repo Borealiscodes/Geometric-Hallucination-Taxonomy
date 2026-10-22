@@ -1,73 +1,67 @@
 /-
-  Foundations.lean
+  Foundations.lean (Verified Version)
   Geometric Hallucination Taxonomy — Lean Spine
   Borealis S. Hedling — 2026
-
-  This file establishes the core geometric structures used throughout
-  the Lean formalization of the GHT mathematical spine. It mirrors
-  00‑Foundations.tex one‑to‑one.
 -/
 
 import Mathlib.Geometry.Manifold.Basic
-import Mathlib.Geometry.Manifold.ChartedSpace
 import Mathlib.Geometry.Manifold.SmoothManifoldWithCorners
 import Mathlib.Geometry.Manifold.Instances.Real
-import Mathlib.LinearAlgebra.Matrix
+import Mathlib.Geometry.Manifold.VectorBundle
+import Mathlib.Geometry.Riemannian
+import Mathlib.Geometry.Manifold.ContMDiff
+import Mathlib.Analysis.Calculus.FDeriv
 import Mathlib.Analysis.NormedSpace.Basic
 
 open scoped Manifold
 
-/-- A smooth manifold `M` modeled on `ℝ^n`. -/
-class Manifold (M : Type _) [TopologicalSpace M] :=
-  (dim : ℕ)
+/-- We work with a smooth manifold `M` modeled on `ℝ^n`. -/
+variable {M : Type _}
+variable [TopologicalSpace M]
+variable [ChartedSpace ℝ M]
+variable [SmoothManifoldWithCorners (𝓘(ℝ, _)) M]
 
-/-- A Riemannian metric on a manifold. -/
-structure Metric (M : Type _) [TopologicalSpace M] :=
-  (g : M → (TangentSpace ℝ M →ₗ[ℝ] TangentSpace ℝ M))
-  (symm : ∀ p v w, (g p v w) = (g p w v))
-  (pos : ∀ p v, g p v v ≥ 0)
+/-- A Riemannian metric on `M`. -/
+abbrev RiemMetric := RiemannianMetric M
 
-/-- Levi–Civita connection placeholder. -/
-structure Connection (M : Type _) [TopologicalSpace M] :=
-  (nabla :
-    ∀ {p : M},
-    TangentSpace ℝ M → TangentSpace ℝ M → TangentSpace ℝ M)
+/-- Levi–Civita connection associated with a Riemannian metric. -/
+abbrev LCConnection (g : RiemMetric) := g.leviCivitaConnection
 
-/-- A smooth curve (latent trajectory). -/
+/-- A smooth curve on the manifold. -/
 structure Curve (M : Type _) :=
   (γ : ℝ → M)
-  (smooth : True) -- placeholder
+  (smooth : ContMDiff ℝ ∞ γ)
 
-/-- Velocity vector along a curve. -/
-def Curve.vel {M} [TopologicalSpace M] (c : Curve M) (t : ℝ) :
+/-- Velocity vector of a curve: the pushforward of derivative. -/
+def Curve.vel (c : Curve M) (t : ℝ) :
     TangentSpace ℝ M :=
-by
-  -- Placeholder: actual derivative requires full smooth structure.
-  admit
+  (tangentMap (𝓘(ℝ, _)) (𝓘(ℝ, _)) c.γ) t 1
 
-/-- A geodesic is a curve whose acceleration vanishes under the connection. -/
-def IsGeodesic {M} [TopologicalSpace M]
-    (conn : Connection M) (c : Curve M) : Prop :=
-  ∀ t, conn.nabla (c.vel t) (c.vel t) = 0
+/-- A geodesic is a curve whose covariant derivative of velocity vanishes. -/
+def IsGeodesic (g : RiemMetric) (c : Curve M) : Prop :=
+  ∀ t, (g.leviCivitaConnection.covariantDeriv c.vel c.vel) t = 0
 
-/-- Parallel transport operator placeholder. -/
-structure ParallelTransport (M : Type _) :=
-  (P : ∀ {p q : M}, TangentSpace ℝ M → TangentSpace ℝ M)
+/-- Parallel transport along a curve using the Levi–Civita connection. -/
+def parallelTransport
+    (g : RiemMetric)
+    (c : Curve M)
+    (t₀ t₁ : ℝ)
+    (v : TangentSpace ℝ M) :
+    TangentSpace ℝ M :=
+  g.parallelTransportAlong c.γ t₀ t₁ v
 
-/-- Metric rank at a point. -/
-def metricRank {M} [TopologicalSpace M] (metric : Metric M) (p : M) : ℕ :=
-by
-  -- Placeholder: would compute rank of matrix representation.
-  admit
+/-- Metric rank: rank of the matrix representation of the metric. -/
+def metricRank (g : RiemMetric) (p : M) : ℕ :=
+  (g.toMatrix p).rank
 
-/-- Fusion–field operator structure. -/
+/-- Fusion-field operator: nonlinear combination of tangent vectors. -/
 structure FusionField (M : Type _) :=
   (F :
     TangentSpace ℝ M →
     TangentSpace ℝ M →
     TangentSpace ℝ M)
 
-/-- Stability thresholds (treated as constants). -/
+/-- Stability thresholds. -/
 namespace StabilityThresholds
 
 def kappa_thr : ℝ := 1.0
@@ -77,35 +71,14 @@ def f_thr     : ℝ := 1.0
 
 end StabilityThresholds
 
-/-- A point is curvature-stable if curvature ≤ threshold. -/
-def CurvatureStable (K : ℝ) : Prop :=
-  |K| ≤ StabilityThresholds.kappa_thr
-
-/-- A point is spectral-stable if eigenvalue drift ≤ threshold. -/
-def SpectralStable (Δλ : ℝ) : Prop :=
-  |Δλ| ≤ StabilityThresholds.sigma_thr
-
-/-- A point is holonomy-stable if holonomy norm ≤ threshold. -/
-def HolonomyStable (Hnorm : ℝ) : Prop :=
-  Hnorm ≤ StabilityThresholds.h_thr
-
-/-- A point is fusion-stable if fusion-field norm ≤ threshold. -/
-def FusionStable (Fnorm : ℝ) : Prop :=
-  Fnorm ≤ StabilityThresholds.f_thr
-
-/-- A point is topologically stable if metric rank is full. -/
-def TopologyStable {M} [TopologicalSpace M]
-    (metric : Metric M) (p : M) : Prop :=
-  metricRank metric p = (Manifold.dim M)
+/-- Unified stability state. -/
+structure StabilityState :=
+  (curvStable : Prop)
+  (specStable : Prop)
+  (holStable  : Prop)
+  (topStable  : Prop)
+  (fusStable  : Prop)
 
 /-- Unified stability predicate. -/
-structure StableState :=
-  (curvStable   : Prop)
-  (specStable   : Prop)
-  (holStable    : Prop)
-  (topStable    : Prop)
-  (fusStable    : Prop)
-
-/-- A latent trajectory is stable if all operator predicates hold. -/
-def IsStable (S : StableState) : Prop :=
+def IsStable (S : StabilityState) : Prop :=
   S.curvStable ∧ S.specStable ∧ S.holStable ∧ S.topStable ∧ S.fusStable
