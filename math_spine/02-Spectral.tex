@@ -1,0 +1,171 @@
+% =====================================================================
+% 02-Spectral.tex
+% Geometric Hallucination Taxonomy — Mathematical Spine
+% Borealis S. Hedling — 2026
+% =====================================================================
+
+\section*{02. Spectral Operator}
+
+This module formalizes the spectral derivative, eigenvalue dynamics, and
+instability criteria used to define Spectral Cascade Hallucinations (SCH)
+in the Geometric Hallucination Taxonomy (GHT). The definitions rely on
+the geometric foundations established in 00-Foundations.tex.
+
+% ---------------------------------------------------------------------
+\subsection*{2.1 Latent Representation Matrices}
+
+Let $A_t$ denote the latent representation at inference step $t$. We
+assume $A_t$ is a real, square matrix of size $n \times n$:
+\[
+A_t \in \mathbb{R}^{n \times n}.
+\]
+
+The matrix $A_t$ may arise from:
+\begin{itemize}
+\item Jacobians of update rules,
+\item local linearizations of latent dynamics,
+\item attention or mixing operators,
+\item synthetic constructions in controlled experiments.
+\end{itemize}
+
+The spectral operator analyzes the eigenvalues of $A_t$.
+
+% ---------------------------------------------------------------------
+\subsection*{2.2 Eigenvalues}
+
+Let $\lambda_1(t), \dots, \lambda_n(t)$ be the eigenvalues of $A_t$,
+counted with algebraic multiplicity:
+\[
+A_t v_i(t) = \lambda_i(t) v_i(t).
+\]
+
+We assume $A_t$ is diagonalizable for simplicity; the instability
+criteria extend to the general case via Jordan normal form.
+
+% ---------------------------------------------------------------------
+\subsection*{2.3 Continuous Spectral Derivative}
+
+For a smooth family of matrices $A(t)$, the continuous spectral
+derivative is
+\[
+\Delta_\lambda(t)
+= \frac{d}{dt} \lambda(t).
+\]
+
+This derivative measures instantaneous spectral drift.
+
+% ---------------------------------------------------------------------
+\subsection*{2.4 Discrete Spectral Derivative}
+
+In discrete inference settings, we define
+\[
+\Delta_\lambda(t)
+= \lambda(t+1) - \lambda(t).
+\]
+
+This is the quantity used in the Python toolkit and experimental
+modules.
+
+% ---------------------------------------------------------------------
+\subsection*{2.5 Spectral Norm Drift}
+
+The spectral norm of $A_t$ is
+\[
+\|A_t\|_2 = \max_i |\lambda_i(t)|.
+\]
+
+Spectral norm drift is defined as
+\[
+\Delta_{\|A\|}(t)
+= \|A_{t+1}\|_2 - \|A_t\|_2.
+\]
+
+Large positive drift indicates explosive growth; large negative drift
+indicates collapse.
+
+% ---------------------------------------------------------------------
+\subsection*{2.6 Spectral Cascade Instability}
+
+A spectral cascade occurs when eigenvalues exhibit runaway behavior.
+
+We define the instability criterion:
+\[
+|\Delta_\lambda(t)| > \sigma_{\mathrm{thr}}.
+\]
+
+A cascade is present if this condition holds for infinitely many $t$.
+
+Explosive cascade:
+\[
+\lambda(t) \to +\infty.
+\]
+
+Collapse cascade:
+\[
+\lambda(t) \to 0.
+\]
+
+Oscillatory cascade:
+\[
+\lambda(t+1) \cdot \lambda(t) < 0.
+\]
+
+These behaviors correspond to distinct SCH subtypes.
+
+% ---------------------------------------------------------------------
+\subsection*{2.7 Spectral Stability Region}
+
+Define the spectral stability region
+\[
+\Omega_{\sigma}
+= \{ A \in \mathbb{R}^{n \times n} :
+|\lambda_i(A_{t+1}) - \lambda_i(A_t)| \le \sigma_{\mathrm{thr}}
+\text{ for all } i \}.
+\]
+
+A latent trajectory is spectrally stable if $A_t \in \Omega_{\sigma}$
+for all $t$.
+
+% ---------------------------------------------------------------------
+\subsection*{2.8 Spectral Cascades and Latent Geometry}
+
+Spectral cascades correspond to geometric instability in the latent
+manifold. If $A_t$ represents a local linearization of the update rule
+$\Phi$, then eigenvalue drift indicates instability in the local
+geometry of the trajectory.
+
+In particular:
+\begin{itemize}
+\item explosive eigenvalues correspond to local expansion,
+\item collapsing eigenvalues correspond to local contraction,
+\item oscillatory eigenvalues correspond to alternating curvature regimes.
+\end{itemize}
+
+These geometric interpretations motivate the SCH classification.
+
+% ---------------------------------------------------------------------
+\subsection*{2.9 Discrete Approximation}
+
+In numerical settings, eigenvalues are computed via standard algorithms
+(e.g., QR decomposition). The discrete spectral derivative is computed
+directly from successive eigenvalue lists.
+
+The Python toolkit implements this approximation and validates it in
+\texttt{/tests/test\_spectral.py}.
+
+% ---------------------------------------------------------------------
+\subsection*{2.10 Spectral–Cascade Hallucinations (SCH)}
+
+A latent trajectory exhibits SCH if there exists an eigenvalue sequence
+$\lambda(t)$ such that
+\[
+|\Delta_\lambda(t)| > \sigma_{\mathrm{thr}}
+\quad \text{for infinitely many } t.
+\]
+
+Equivalently, SCH occurs when spectral instability prevents the latent
+trajectory from remaining within a stable linearization regime.
+
+% =====================================================================
+% End of 02-Spectral.tex
+% =====================================================================
