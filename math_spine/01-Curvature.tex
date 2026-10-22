@@ -1,0 +1,151 @@
+% =====================================================================
+% 01-Curvature.tex
+% Geometric Hallucination Taxonomy — Mathematical Spine
+% Borealis S. Hedling — 2026
+% =====================================================================
+
+\section*{01. Curvature Operator}
+
+This module formalizes the curvature tensor, sectional curvature, and
+instability criteria used to define Curvature–Driven Hallucinations (CDH)
+in the Geometric Hallucination Taxonomy (GHT). All definitions rely on
+the geometric foundations established in 00-Foundations.tex.
+
+% ---------------------------------------------------------------------
+\subsection*{1.1 Curvature Tensor}
+
+Let $\nabla$ be the Levi–Civita connection associated with the metric $g$.
+The curvature tensor is defined by
+\[
+R(X,Y)Z
+= \nabla_X \nabla_Y Z
+- \nabla_Y \nabla_X Z
+- \nabla_{[X,Y]} Z.
+\]
+
+In local coordinates $(x^1,\dots,x^n)$, with Christoffel symbols
+$\Gamma^i_{\;jk}$, the components of the curvature tensor are
+\[
+R^i_{\;jkl}
+= \partial_k \Gamma^i_{\;jl}
+- \partial_l \Gamma^i_{\;jk}
++ \Gamma^i_{\;mk} \Gamma^m_{\;jl}
+- \Gamma^i_{\;ml} \Gamma^m_{\;jk}.
+\]
+
+The curvature tensor is multilinear and satisfies the usual symmetries:
+\[
+R(X,Y)Z = -R(Y,X)Z,
+\]
+\[
+\langle R(X,Y)Z, W \rangle_g
+= -\langle R(X,Y)W, Z \rangle_g,
+\]
+\[
+R(X,Y)Z + R(Y,Z)X + R(Z,X)Y = 0.
+\]
+
+% ---------------------------------------------------------------------
+\subsection*{1.2 Sectional Curvature}
+
+Let $u,v \in T_p M$ be linearly independent tangent vectors. The sectional
+curvature of the 2–plane $\Pi = \operatorname{span}\{u,v\}$ is
+\[
+K(u,v)
+= \frac{\langle R(u,v)v, u \rangle_g}
+       {\langle u,u \rangle_g \langle v,v \rangle_g
+        - \langle u,v \rangle_g^2}.
+\]
+
+The denominator is the squared area of the parallelogram spanned by
+$u$ and $v$, ensuring $K(u,v)$ is well–defined.
+
+Sectional curvature measures how geodesics deviate from Euclidean
+behavior in the direction of $\Pi$.
+
+% ---------------------------------------------------------------------
+\subsection*{1.3 Curvature Along Trajectories}
+
+Given a latent trajectory $x(t)$, we define the curvature along the
+trajectory by evaluating sectional curvature on the velocity vector
+$\dot{x}(t)$ and a transverse direction $v(t)$:
+\[
+K_t = K(\dot{x}(t), v(t)).
+\]
+
+The choice of $v(t)$ depends on the diagnostic context. In synthetic
+experiments, $v(t)$ is chosen to be orthogonal to $\dot{x}(t)$.
+
+% ---------------------------------------------------------------------
+\subsection*{1.4 Curvature Instability}
+
+A curvature instability occurs when sectional curvature exceeds a fixed
+threshold:
+\[
+|K(u,v)| > \kappa_{\mathrm{thr}}.
+\]
+
+Oscillatory instability occurs when the sign of $K(u,v)$ alternates
+across steps:
+\[
+K_{t+1} \cdot K_t < 0.
+\]
+
+Collapse instability occurs when curvature approaches negative infinity:
+\[
+K(u,v) \to -\infty,
+\]
+indicating hyperbolic blowout.
+
+Expansion instability occurs when curvature approaches positive infinity:
+\[
+K(u,v) \to +\infty,
+\]
+indicating spherical blowout.
+
+% ---------------------------------------------------------------------
+\subsection*{1.5 Curvature–Driven Hallucinations (CDH)}
+
+Curvature–Driven Hallucinations arise when curvature instability causes
+latent trajectories to diverge, collapse, or oscillate unpredictably.
+
+Formally, a trajectory exhibits CDH if there exists a sequence of
+directions $v(t)$ such that
+\[
+|K(\dot{x}(t), v(t))| > \kappa_{\mathrm{thr}}
+\quad \text{for infinitely many } t.
+\]
+
+Equivalently, CDH occurs when curvature instability prevents the latent
+trajectory from remaining within a stable geometric neighborhood.
+
+% ---------------------------------------------------------------------
+\subsection*{1.6 Curvature Stability Region}
+
+Define the curvature stability region
+\[
+\Omega_{\kappa}
+= \{ p \in M : |K(u,v)| \le \kappa_{\mathrm{thr}}
+   \text{ for all } u,v \in T_p M \}.
+\]
+
+A trajectory is curvature–stable if $x(t) \in \Omega_{\kappa}$ for all $t$.
+
+% ---------------------------------------------------------------------
+\subsection*{1.7 Discrete Approximation}
+
+In numerical settings, curvature is approximated using discrete
+differences of Christoffel symbols:
+\[
+\partial_k \Gamma^i_{\;jl}
+\approx
+\frac{\Gamma^i_{\;jl}(x_{t+1}) - \Gamma^i_{\;jl}(x_t)}
+     {\|x_{t+1} - x_t\|}.
+\]
+
+This approximation is used in the Python toolkit and validated in
+\texttt{/tests/test\_curvature.py}.
+
+% =====================================================================
+% End of 01-Curvature.tex
+% =====================================================================
