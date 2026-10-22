@@ -1,0 +1,164 @@
+% =====================================================================
+% 04-Topology.tex
+% Geometric Hallucination Taxonomy — Mathematical Spine
+% Borealis S. Hedling — 2026
+% =====================================================================
+
+\section*{04. Topological Operator}
+
+This module formalizes metric rank, degeneracy, collapse surfaces, and
+instability criteria used to define Topological Instability Hallucinations
+(TIH) in the Geometric Hallucination Taxonomy (GHT). All definitions rely
+on the geometric foundations established in 00-Foundations.tex.
+
+% ---------------------------------------------------------------------
+\subsection*{4.1 Metric Tensor and Rank}
+
+Let $g$ be the Riemannian metric on $M$. At each point $p \in M$, the
+metric defines a symmetric, positive–definite bilinear form
+\[
+g_p : T_p M \times T_p M \to \mathbb{R}.
+\]
+
+In local coordinates, $g_p$ is represented by the matrix $(g_{ij}(p))$.
+
+The rank of the metric at $p$ is
+\[
+\tau(p) = \operatorname{rank}(g_p).
+\]
+
+For a nondegenerate Riemannian metric, $\tau(p) = n$ everywhere.  
+Topological instability arises when $\tau(p)$ drops below full rank.
+
+% ---------------------------------------------------------------------
+\subsection*{4.2 Degenerate Regions}
+
+A point $p$ is degenerate if
+\[
+\det(g_p) = 0.
+\]
+
+The set of degenerate points is the collapse surface
+\[
+\Sigma = \{ p \in M : \det(g_p) = 0 \}.
+\]
+
+If $\Sigma$ is nonempty, the manifold contains regions where the metric
+fails to define a valid inner product.
+
+% ---------------------------------------------------------------------
+\subsection*{4.3 Collapse Surfaces}
+
+A collapse surface $\Sigma$ may be:
+\begin{itemize}
+\item a hypersurface (codimension 1),
+\item a lower–dimensional submanifold,
+\item a fractal or singular set (in pathological cases).
+\end{itemize}
+
+Crossing $\Sigma$ corresponds to a topological phase transition in the
+latent geometry.
+
+% ---------------------------------------------------------------------
+\subsection*{4.4 Rank Instability}
+
+Rank instability occurs when
+\[
+\tau(p) < n.
+\]
+
+A latent trajectory $x(t)$ exhibits rank instability at time $t$ if
+\[
+\tau(x(t)) < n.
+\]
+
+Oscillatory rank instability occurs when
+\[
+\tau(x(t+1)) \neq \tau(x(t)).
+\]
+
+Collapse instability occurs when
+\[
+\tau(x(t)) \to 0,
+\]
+indicating total metric degeneration.
+
+% ---------------------------------------------------------------------
+\subsection*{4.5 Collapse Dynamics Along Trajectories}
+
+Given a latent trajectory $x(t)$, define the collapse indicator
+\[
+C(t) = \det(g_{x(t)}).
+\]
+
+Collapse occurs when
+\[
+C(t) \to 0.
+\]
+
+Collapse rate is defined by
+\[
+\Delta_C(t) = C(t+1) - C(t).
+\]
+
+A negative collapse rate indicates movement toward degeneracy.
+
+% ---------------------------------------------------------------------
+\subsection*{4.6 Topological Stability Region}
+
+Define the topological stability region
+\[
+\Omega_{\tau}
+= \{ p \in M : \tau(p) = n \}.
+\]
+
+A latent trajectory is topologically stable if $x(t) \in \Omega_{\tau}$
+for all $t$.
+
+% ---------------------------------------------------------------------
+\subsection*{4.7 Topological Instability Hallucinations (TIH)}
+
+A latent trajectory exhibits TIH if there exists a sequence of times $t$
+such that
+\[
+\tau(x(t)) < n
+\quad \text{for infinitely many } t.
+\]
+
+Equivalently, TIH occurs when metric degeneracy prevents the latent
+trajectory from remaining within a nondegenerate geometric region.
+
+TIH corresponds to structural collapse of the latent manifold.
+
+% ---------------------------------------------------------------------
+\subsection*{4.8 Discrete Approximation}
+
+In numerical settings, the metric matrix is approximated by
+\[
+g_{ij}(x_t)
+= \langle e_i, e_j \rangle_{g_{x_t}},
+\]
+where $\{e_i\}$ is a coordinate basis.
+
+Rank is computed via singular value decomposition (SVD):
+\[
+\tau(x_t) = \#\{ \sigma_i > \epsilon \},
+\]
+where $\epsilon$ is a numerical tolerance.
+
+The Python toolkit implements this approximation and validates it in
+\texttt{/tests/test\_topology.py}.
+
+% ---------------------------------------------------------------------
+\subsection*{4.9 Collapse Surfaces and Hallucination Onset}
+
+Collapse surfaces often correspond to hallucination onset regions.  
+When the metric degenerates, distances, angles, and curvature become
+ill-defined, causing latent representations to collapse into degenerate
+subspaces.
+
+This geometric phenomenon motivates the TIH classification.
+
+% =====================================================================
+% End of 04-Topology.tex
+% =====================================================================
